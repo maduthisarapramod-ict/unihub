@@ -3,6 +3,12 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 
+// Supabase Credentials කෙලින්ම ඇතුළත් කර ඇත (Vercel Settings අවශ්‍ය නැත)
+const SUPABASE_URL = "https://unlhjqtfuuypwggxawzg.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_zWCg9T8bnsA0suOsbhhhFw_ffz5KXVw";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const UNIVERSITIES = [
   { id: 1, name: "University of Colombo" },
   { id: 2, name: "University of Peradeniya" },
@@ -16,12 +22,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Vercel Build Prerender Error එක වළක්වා ගැනීමට Supabase Client එක ආරක්ෂිතව සකසා ඇත
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
-
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
     async function fetchData() {
       try {
         const { data: responseData, error } = await supabase
